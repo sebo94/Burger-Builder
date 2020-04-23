@@ -14,14 +14,17 @@ const withErrorHandler = (WrappedComponent, axios) => {
         this.setState({ error: null });
         return request;
       });
-      this.responseInterceptor = axios.interceptors.response.use(res => res, (error) => {
-        this.setState({ error });
-      });
+      this.responseInterceptor = axios.interceptors.response.use(
+        (res) => res,
+        (error) => {
+          this.setState({ error });
+        }
+      );
     }
 
     componentWillUnmount() {
-        axios.interceptors.request.eject(this.requestInterceptor);
-        axios.interceptors.response.eject(this.responseInterceptor);
+      axios.interceptors.request.eject(this.requestInterceptor);
+      axios.interceptors.response.eject(this.responseInterceptor);
     }
 
     errorConfirmedHandler = () => {
